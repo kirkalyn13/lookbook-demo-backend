@@ -6,8 +6,12 @@ import com.kirky.lookbookdemo.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,7 +29,18 @@ public class ProductServiceImpl implements ProductService {
                 .findAll()
                 .stream()
                 .map(this::convertToDTO)
+                .sorted(Comparator.comparing(ProductDTO::getId))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public PageImpl<ProductDTO> getProductsPaginated(Pageable pageable) {
+        return productRepository
+                .findAll(pageable)
+                .stream()
+                .map(this::convertToDTO)
+                .sorted(Comparator.comparing(ProductDTO::getId))
+                .collect(Collectors.collectingAndThen(Collectors.toList(), PageImpl::new));
     }
 
     @Override
@@ -37,20 +52,21 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public ProductDTO addProduct(ProductDTO productDTO) {
         productRepository.save(convertToEntity(productDTO));
         return productDTO;
     }
 
     @Override
-    public Product deleteProductById(Integer id) {
-        return productRepository
+    public void deleteProductById(Integer id) {
+        productRepository
                 .findById(id)
                 .map(product -> {
                     productRepository.deleteById(id);
                     return product;
                 })
-            .orElseThrow(() -> new EntityNotFoundException("No product with id : " + id));
+                .orElseThrow(() -> new EntityNotFoundException("No product with id : " + id));
     }
 
     private ProductDTO convertToDTO(Product entity) {

@@ -4,6 +4,9 @@ import com.kirky.lookbookdemo.dto.ProductDTO;
 import com.kirky.lookbookdemo.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +22,15 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<List<ProductDTO>> getProducts() {
         List<ProductDTO> results = productService.getProducts();
+        return new ResponseEntity<>(results, HttpStatus.OK);
+    }
+
+    @GetMapping("/paginated")
+    public ResponseEntity<PageImpl<ProductDTO>> getProductsPaginated(
+            @RequestParam("offset") Integer pageNum,
+            @RequestParam("size") Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNum, pageSize);
+        PageImpl<ProductDTO> results = productService.getProductsPaginated(pageable);
         return new ResponseEntity<>(results, HttpStatus.OK);
     }
 
