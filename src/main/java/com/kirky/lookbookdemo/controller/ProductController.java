@@ -3,10 +3,7 @@ package com.kirky.lookbookdemo.controller;
 import com.kirky.lookbookdemo.dto.ProductDTO;
 import com.kirky.lookbookdemo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,13 +23,13 @@ public class ProductController {
     }
 
     @GetMapping("/paginated")
-    public ResponseEntity<PageImpl<ProductDTO>> getProductsPaginated(
+    public ResponseEntity<Page<ProductDTO>> getProductsPaginated(
             @RequestParam("offset") int pageNum,
             @RequestParam("size") int pageSize) {
         Pageable pageable = PageRequest
                 .of(pageNum, pageSize)
                 .withSort(Sort.by(Sort.Direction.DESC, "id"));
-        PageImpl<ProductDTO> results = productService.getProductsPaginated(pageable);
+        Page<ProductDTO> results = productService.getProductsPaginated(pageable);
         return new ResponseEntity<>(results, HttpStatus.OK);
     }
 
