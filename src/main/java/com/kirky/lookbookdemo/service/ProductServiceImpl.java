@@ -39,7 +39,6 @@ public class ProductServiceImpl implements ProductService {
                 .findAll(pageable)
                 .stream()
                 .map(this::convertToDTO)
-                .sorted(Comparator.comparing(ProductDTO::getId))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), PageImpl::new));
     }
 
