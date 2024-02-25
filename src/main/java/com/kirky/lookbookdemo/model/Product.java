@@ -6,7 +6,7 @@ import lombok.Data;
 @Entity
 @Table(name = "products")
 @Data
-public class EProduct {
+public class Product {
     @Id
     @Column(name = "id")
     private Integer id;
