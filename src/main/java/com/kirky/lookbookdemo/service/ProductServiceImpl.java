@@ -6,6 +6,7 @@ import com.kirky.lookbookdemo.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -34,12 +35,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public PageImpl<ProductDTO> getProductsPaginated(Pageable pageable) {
+    public Page<ProductDTO> getProductsPaginated(Pageable pageable) {
         return productRepository
                 .findAll(pageable)
-                .stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.collectingAndThen(Collectors.toList(), PageImpl::new));
+                .map(this::convertToDTO);
     }
 
     @Override
