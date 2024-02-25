@@ -33,4 +33,10 @@ public class ProductController {
         ProductDTO result = productService.addProduct(productDTO);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/{id:.+}")
+    public ResponseEntity<String> deleteProductById(@PathVariable("id") Integer id) {
+        productService.deleteProductById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

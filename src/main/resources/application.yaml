@@ -5,5 +5,5 @@ spring:
     password: root
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-    hibernate:
-#      ddl-auto: create-drop
+#    hibernate:
+#      ddl-auto: create
