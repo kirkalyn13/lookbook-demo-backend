@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ProductService {
     List<ProductDTO> getProducts();
-    Page<ProductDTO> getProductsPaginated(Pageable pageable);
+    Page<ProductDTO> getProductsPaginated(String search, Pageable pageable);
     ProductDTO getProductById(Integer id);
     ProductDTO addProduct(ProductDTO productDTO);
     void deleteProductById(Integer id);
