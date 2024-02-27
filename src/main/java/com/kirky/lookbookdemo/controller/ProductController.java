@@ -24,12 +24,13 @@ public class ProductController {
 
     @GetMapping("/search")
     public ResponseEntity<Page<ProductDTO>> getProductsPaginated(
+            @RequestParam("q") String search,
             @RequestParam("skip") int pageNum,
             @RequestParam("limit") int pageSize) {
         Pageable pageable = PageRequest
                 .of(pageNum, pageSize)
                 .withSort(Sort.by(Sort.Direction.DESC, "id"));
-        Page<ProductDTO> results = productService.getProductsPaginated(pageable);
+        Page<ProductDTO> results = productService.getProductsPaginated(search, pageable);
         return new ResponseEntity<>(results, HttpStatus.OK);
     }
 
