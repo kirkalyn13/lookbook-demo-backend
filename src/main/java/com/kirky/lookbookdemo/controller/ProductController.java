@@ -22,10 +22,10 @@ public class ProductController {
         return new ResponseEntity<>(results, HttpStatus.OK);
     }
 
-    @GetMapping("/paginated")
+    @GetMapping("/search")
     public ResponseEntity<Page<ProductDTO>> getProductsPaginated(
-            @RequestParam("offset") int pageNum,
-            @RequestParam("size") int pageSize) {
+            @RequestParam("skip") int pageNum,
+            @RequestParam("limit") int pageSize) {
         Pageable pageable = PageRequest
                 .of(pageNum, pageSize)
                 .withSort(Sort.by(Sort.Direction.DESC, "id"));
