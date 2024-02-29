@@ -30,7 +30,7 @@ public class ArticleServiceImpl implements ArticleService {
         articleRepository.save(convertToEntity(articleDTO));
         return articleDTO;
     }
-    
+
     private ArticleDTO convertToDTO(Article entity) {
         return modelMapper.map(entity, ArticleDTO.class);
     }

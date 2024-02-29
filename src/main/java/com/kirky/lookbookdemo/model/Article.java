@@ -21,7 +21,7 @@ public class Article {
     @Column(name = "subtitle")
     private String subtitle;
 
-    @Column(name = "content")
+    @Column(name = "content", length = 5000)
     private String content;
 
     @Column(name = "image")
