@@ -29,7 +29,7 @@ public class ProductController {
             @RequestParam("limit") int pageSize) {
         Pageable pageable = PageRequest
                 .of(pageNum, pageSize)
-                .withSort(Sort.by(Sort.Direction.DESC, "id"));
+                .withSort(Sort.by(Sort.Direction.ASC, "id"));
         Page<ProductDTO> results = productService.getProductsPaginated(search, pageable);
         return new ResponseEntity<>(results, HttpStatus.OK);
     }
