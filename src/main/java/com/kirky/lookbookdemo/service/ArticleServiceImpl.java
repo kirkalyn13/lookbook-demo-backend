@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class ArticleServiceImpl implements ArticleService {
     @Autowired
@@ -17,11 +20,12 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     ModelMapper modelMapper;
     @Override
-    public ArticleDTO getArticleByPath(String path) {
-        Article article = articleRepository
-                .findByPath(path)
-                .orElseThrow(() -> new EntityNotFoundException("No article from : " + path));
-        return convertToDTO(article);
+    public List<ArticleDTO> getArticlesByPath(String path) {
+        return articleRepository
+                .findArticlesByPath(path)
+                .stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
 
     @Override

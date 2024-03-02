@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Getter
 @Setter
@@ -13,7 +14,6 @@ public class ArticleDTO implements Serializable {
     private String title;
     private String path;
     private String subtitle;
-    private String content;
-    private String image;
-    private String caption;
+    private List<ContentDTO> content;
+    private List<ImageDTO> images;
 }
