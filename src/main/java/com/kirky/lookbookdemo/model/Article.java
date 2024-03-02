@@ -1,7 +1,11 @@
 package com.kirky.lookbookdemo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import javax.swing.text.StringContent;
+import java.util.List;
 
 @Entity
 @Table(name = "articles")
@@ -21,12 +25,11 @@ public class Article {
     @Column(name = "subtitle")
     private String subtitle;
 
-    @Column(name = "content", length = 5000)
-    private String content;
+    @JsonBackReference
+    @OneToMany( fetch = FetchType.LAZY, mappedBy = "id", cascade = CascadeType.ALL)
+    private List<Content> content;
 
-    @Column(name = "image")
-    private String image;
-
-    @Column(name = "caption")
-    private String caption;
+    @JsonBackReference
+    @OneToMany( fetch = FetchType.LAZY, mappedBy = "id", cascade = CascadeType.ALL)
+    private List<Image> images;
 }

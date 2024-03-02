@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/v1/articles")
 public class ArticleController {
@@ -14,9 +16,9 @@ public class ArticleController {
     ArticleService articleService;
 
     @GetMapping("/{path}")
-    public ResponseEntity<ArticleDTO> getArticleByPath(@PathVariable("path") String path) {
-        ArticleDTO result = articleService.getArticleByPath(path);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+    public ResponseEntity<List<ArticleDTO>> getArticlesByPath(@PathVariable("path") String path) {
+        List<ArticleDTO> results = articleService.getArticlesByPath(path);
+        return new ResponseEntity<>(results, HttpStatus.OK);
     }
 
     @PostMapping
